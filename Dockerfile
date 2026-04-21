@@ -1,4 +1,4 @@
-FROM myoung34/github-runner:latest
+FROM myoung34/github-runner:ubuntu-jammy
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV RUNNER_TOOL_CACHE=/opt/hostedtoolcache
