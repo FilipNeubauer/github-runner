@@ -27,3 +27,10 @@ RUN mkdir -p /opt/hostedtoolcache && chmod -R 777 /opt/hostedtoolcache
 # Allow the runner user to sudo without a password
 RUN echo "runner ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/runner \
     && chmod 0440 /etc/sudoers.d/runner
+
+# Cleanup script: clear _work directory after each job
+RUN printf '#!/usr/bin/env bash\nrm -rf "${RUNNER_WORKDIR:-/home/runner/_work}"/*\n' \
+    > /usr/local/bin/cleanup.sh \
+    && chmod +x /usr/local/bin/cleanup.sh
+
+ENV ACTIONS_RUNNER_HOOK_JOB_COMPLETED=/usr/local/bin/cleanup.sh
