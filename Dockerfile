@@ -29,7 +29,7 @@ RUN echo "runner ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/runner \
     && chmod 0440 /etc/sudoers.d/runner
 
 # Cleanup script: clear _work directory after each job
-RUN printf '#!/usr/bin/env bash\necho "Cleaning up work directory: ${RUNNER_WORKDIR:-/_work}"\nrm -rf "${RUNNER_WORKDIR:-/_work}"/*\necho "Cleanup complete"\n' \
+RUN printf '#!/usr/bin/env bash\necho "Cleaning up work directory: ${RUNNER_WORKDIR:-/_work}"\nsudo rm -rf "${RUNNER_WORKDIR:-/_work}"/* || true\necho "Cleanup complete"\n' \
     > /usr/local/bin/cleanup.sh \
     && chmod +x /usr/local/bin/cleanup.sh
 
